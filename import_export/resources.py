@@ -94,16 +94,6 @@ class ResourceOptions(object):
     skip_unchanged = False
     report_skipped = True
 
-    def __new__(cls, meta=None):
-        overrides = {}
-
-        if meta:
-            for override_name in dir(meta):
-                if not override_name.startswith('_'):
-                    overrides[override_name] = getattr(meta, override_name)
-
-        return object.__new__(type(str('ResourceOptions'), (cls,), overrides))
-
 
 class DeclarativeMetaclass(type):
 
@@ -120,7 +110,7 @@ class DeclarativeMetaclass(type):
                 # Collect the Meta options
                 options = getattr(base, 'Meta', None)
                 for option in [option for option in dir(options)
-                               if option in dir(meta) and not option.startswith('_')]:
+                               if not option.startswith('_')]:
                     setattr(meta, option, getattr(options, option))
 
         # Add direct fields
@@ -138,7 +128,7 @@ class DeclarativeMetaclass(type):
         # Add direct options
         options = getattr(new_class, 'Meta', None)
         for option in [option for option in dir(options) 
-                       if option in dir(meta) and not option.startswith('_')]:
+                       if not option.startswith('_')]:
             setattr(meta, option, getattr(options, option))
         new_class._meta = meta
 
