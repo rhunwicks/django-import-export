@@ -6,6 +6,10 @@ Changelog for django-import-export
 
 - Django 1.8 compatibility
 
+- add attribute inheritance to Resource (#140)
+
+- make the filename and user available to import_data (#237)
+
 - Add to_encoding functionality (#244)
 
 - Call before_import before creating the instance_loader - fixes #193
